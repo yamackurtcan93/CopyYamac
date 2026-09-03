@@ -1,6 +1,40 @@
-pip install -r requirements.txt
-export TELEGRAM_BOT_TOKEN=...
-export TELEGRAM_CHAT_ID=...
-export GMAIL_ADDRESS=...
-export GMAIL_APP_PASSWORD=...
-python -m scraper.main
+name: Congress Trade Scraper
+
+on:
+  workflow_dispatch:        # Actions sekmesinden manuel "Run workflow" ile test edebilmen için
+  schedule:
+    - cron: '0 * * * *'     # örnek: her saat başı — kendi ihtiyacına göre ayarla
+
+permissions:
+  contents: write            # state/seen.json'u commit'leyebilmek için
+
+jobs:
+  run-scraper:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run scraper
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          GMAIL_ADDRESS: ${{ secrets.GMAIL_ADDRESS }}
+          GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
+        run: python -m scraper.main
+
+      - name: Commit updated state
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add state/seen.json
+          git diff --staged --quiet || git commit -m "Update seen state [skip ci]"
+          git push
