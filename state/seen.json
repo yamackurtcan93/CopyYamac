@@ -410,7 +410,11 @@
     "house-20035553",
     "house-20035558",
     "house-20035580",
-    "house-20035539"
+    "house-20035539",
+    "house-9116355",
+    "house-9116356",
+    "house-9116357",
+    "house-9116361"
   ],
   "senate": [
     "senate-f8d003c0-ca1e-4c39-9d66-632d220180e1",
@@ -426,6 +430,7 @@
     "senate-028aef33-dc0d-44a1-992f-aa35ee42685b",
     "senate-9e2ff733-aeac-4ce8-872c-3d6b7913da88",
     "senate-0a93a20c-2a0f-4979-80ca-cc2f61297527",
-    "senate-6bf3b6f7-9e1b-499a-bd5a-990292ce2e72"
+    "senate-6bf3b6f7-9e1b-499a-bd5a-990292ce2e72",
+    "senate-0541be4f-4f96-4d84-8d6f-d349f218bb2a"
   ]
 }
